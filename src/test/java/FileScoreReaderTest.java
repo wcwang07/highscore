@@ -3,10 +3,12 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonParser;
 import java.security.SecureRandom;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.google.gson.JsonObject;
+import java.util.UUID;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -22,17 +24,14 @@ public class FileScoreReaderTest {
   @Test
   public void testReturndResultHWithHighest2HappyPath() {
 
-
     HashMap<Integer, Object> record = new HashMap<Integer, Object>();
 
     //insert determined scores and its payload
     GsonBuilder gsonMapBuilder = new GsonBuilder();
     Gson gsonObject = gsonMapBuilder.create();
-
     String json1 = gsonObject.toJson(generateRandomPayload());
     String json2 = gsonObject.toJson(generateRandomPayload());
     String json3 = gsonObject.toJson(generateRandomPayload());
-
     JsonObject jsonObject1 = JsonParser.parseString(json1)
         .getAsJsonObject();
     JsonObject jsonObject2 = JsonParser.parseString(json2)
@@ -45,11 +44,21 @@ public class FileScoreReaderTest {
     record.put(16027069,jsonObject3);
 
     List<Map<String,Object>> result = App.returndResultByHighest(record,2);
+    Collections.reverse(result);
     Map<String, Object> t1 = result.get(0);
     Assert.assertEquals(jsonObject3.get("id").getAsString(), t1.get("id"));
 
   }
 
+  @Test
+  public void testGenerateIdScoreMap() {
+    Map<String, Object> map = new HashMap<>();
+    map.put("id", UUID.randomUUID());
+    Map<String, Object> result = App.generateIdScoreMap(12345,map);
+    Assert.assertEquals(result.get("id"),map.get("id"));
+    Assert.assertEquals(result.get("score"),12345);
+
+  }
 
   private HashMap generateRandomPayload() {
 

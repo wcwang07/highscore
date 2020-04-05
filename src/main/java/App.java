@@ -78,22 +78,32 @@ public class App {
                 for(String nodeKey:record.keySet()){
                     //traverse root level node to determine if `id` is present
                     if(nodeKey.equalsIgnoreCase("id")) idAtRootLevel=true;
-
                 }
                 if(idAtRootLevel && numOfAddedRecord<highest){
                     //add from the highest score
-                    resultList.add(record);
+                    HashMap<String, Object> output = generateIdScoreMap(row.getKey(),record);
+                    resultList.add(output);
                     numOfAddedRecord++;
                 }
                 //reset idAtRootLevel flag
                 idAtRootLevel=false;
             }
             catch (Exception e){
-               LOGGER.debug("ERROR :"+e);
+               LOGGER.error("ERROR :"+e);
             }
         }
         //reverse list because highest score is pushed last
-        Collections.reverse(resultList);
+        LOGGER.debug("Collected Results:" + resultList);
         return resultList;
+    }
+
+    public static HashMap<String, Object> generateIdScoreMap(Integer score, Map<String, Object> map){
+
+            HashMap<String, Object> result = new HashMap<>();
+            result.put("score",score);
+            if(map.containsKey("id")){
+                result.put("id",map.get("id"));
+            }
+            return result;
     }
 }
