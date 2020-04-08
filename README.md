@@ -7,7 +7,7 @@ Program outputs correctly formatted JSON. This program needs to take the file pa
 
 inside the project root dir
 
-`maven clean install`
+`mvn clean install`
 
 # how to run this program
 
