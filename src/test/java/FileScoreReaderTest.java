@@ -1,9 +1,7 @@
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -69,11 +67,25 @@ public class FileScoreReaderTest {
 
   }
 
+//  @Test
+//  public void createTestFile() throws IOException {
+//    int count=0;
+//    String filename="./testFileReader";
+//    PrintStream o = new PrintStream(new File(filename));
+//    ObjectMapper objectMapper = new ObjectMapper();
+//
+//    while(count<10){
+//      String json = objectMapper.writeValueAsString(generateRandomPayload());
+//      System.setOut(o);
+//      System.out.println((count++)+":"+json);
+//    }
+//  }
+
   private HashMap generateRandomPayload() {
 
     HashMap<String, Object> map = new HashMap<>();
     SecureRandom random = new SecureRandom();
-//    String uuid = UUID.randomUUID().toString();
+
     int umbrella = random.nextInt(10000);
     int value = random.nextInt(100000);
 
