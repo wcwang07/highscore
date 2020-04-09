@@ -1,13 +1,7 @@
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonParser;
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import com.google.gson.JsonObject;
 import java.util.UUID;
 import org.junit.Assert;
 import org.junit.Test;
@@ -21,32 +15,42 @@ public class FileScoreReaderTest {
   private static final String DATA_FOR_RANDOM_STRING = CHAR_LOWER + NUMBER;
   private static SecureRandom random = new SecureRandom();
 
+
+
   @Test
-  public void testReturndResultHWithHighest2HappyPath() {
+  public void testUpdateMapHappyPath() {
 
-    HashMap<Integer, Object> record = new HashMap<Integer, Object>();
+    Integer integer1 = Integer.valueOf("14027069");
+    Integer integer2 = Integer.valueOf("15027069");
+    Integer integer3 = Integer.valueOf("16027069");
 
-    //insert determined scores and its payload
-    GsonBuilder gsonMapBuilder = new GsonBuilder();
-    Gson gsonObject = gsonMapBuilder.create();
-    String json1 = gsonObject.toJson(generateRandomPayload());
-    String json2 = gsonObject.toJson(generateRandomPayload());
-    String json3 = gsonObject.toJson(generateRandomPayload());
-    JsonObject jsonObject1 = JsonParser.parseString(json1)
-        .getAsJsonObject();
-    JsonObject jsonObject2 = JsonParser.parseString(json2)
-        .getAsJsonObject();
-    JsonObject jsonObject3 = JsonParser.parseString(json3)
-        .getAsJsonObject();
+   HashMap<Integer, Object> result = new HashMap<>();
 
-    record.put(14027069,jsonObject1);
-    record.put(15027069,jsonObject2);
-    record.put(16027069,jsonObject3);
+    String[] arr1 = {"14027069",generateRandomPayload().toString()};
+    String[] arr2 = {"15027069",generateRandomPayload().toString()};
+    String[] arr3 = {"16027069",generateRandomPayload().toString()};
+    String[] arr4 = {"17027069",generateRandomPayload().toString()};
+    String[] arr5 = {"18027069",generateRandomPayload().toString()};
+    String[] arr6 = {"19027069",generateRandomPayload().toString()};
+    String[] arr7 = {"24027069",generateRandomPayload().toString()};
+    String[] arr8 = {"25027069",generateRandomPayload().toString()};
+    String[] arr9 = {"26027069",generateRandomPayload().toString()};
+    String[] arr10 = {"27027069",generateRandomPayload().toString()};
 
-    List<Map<String,Object>> result = App.returndResultByHighest(record,2);
-    Collections.reverse(result);
-    Map<String, Object> t1 = result.get(0);
-    Assert.assertEquals(jsonObject3.get("id").getAsString(), t1.get("id"));
+    App.updateMap(result,arr1,2);
+    App.updateMap(result,arr2,2);
+    App.updateMap(result,arr3,2);
+    App.updateMap(result,arr4,2);
+    App.updateMap(result,arr5,2);
+    App.updateMap(result,arr6,2);
+    App.updateMap(result,arr7,2);
+    App.updateMap(result,arr8,2);
+    App.updateMap(result,arr9,2);
+    App.updateMap(result,arr10,2);
+
+    Assert.assertEquals(result.size(),2);
+    Assert.assertTrue(result.containsKey(26027069));
+    Assert.assertTrue(result.containsKey(27027069));
 
   }
 
