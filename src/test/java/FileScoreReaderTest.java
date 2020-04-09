@@ -1,3 +1,9 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -18,39 +24,41 @@ public class FileScoreReaderTest {
 
 
   @Test
-  public void testUpdateMapHappyPath() {
+  public void testUpdateMapHappyPath() throws IOException {
 
-    Integer integer1 = Integer.valueOf("14027069");
-    Integer integer2 = Integer.valueOf("15027069");
-    Integer integer3 = Integer.valueOf("16027069");
+    print();
 
-   HashMap<Integer, Object> result = new HashMap<>();
-
-    String[] arr1 = {"14027069",generateRandomPayload().toString()};
-    String[] arr2 = {"15027069",generateRandomPayload().toString()};
-    String[] arr3 = {"16027069",generateRandomPayload().toString()};
-    String[] arr4 = {"17027069",generateRandomPayload().toString()};
-    String[] arr5 = {"18027069",generateRandomPayload().toString()};
-    String[] arr6 = {"19027069",generateRandomPayload().toString()};
-    String[] arr7 = {"24027069",generateRandomPayload().toString()};
-    String[] arr8 = {"25027069",generateRandomPayload().toString()};
-    String[] arr9 = {"26027069",generateRandomPayload().toString()};
-    String[] arr10 = {"27027069",generateRandomPayload().toString()};
-
-    App.updateMap(result,arr1,2);
-    App.updateMap(result,arr2,2);
-    App.updateMap(result,arr3,2);
-    App.updateMap(result,arr4,2);
-    App.updateMap(result,arr5,2);
-    App.updateMap(result,arr6,2);
-    App.updateMap(result,arr7,2);
-    App.updateMap(result,arr8,2);
-    App.updateMap(result,arr9,2);
-    App.updateMap(result,arr10,2);
-
-    Assert.assertEquals(result.size(),2);
-    Assert.assertTrue(result.containsKey(26027069));
-    Assert.assertTrue(result.containsKey(27027069));
+//    Integer integer1 = Integer.valueOf("14027069");
+//    Integer integer2 = Integer.valueOf("15027069");
+//    Integer integer3 = Integer.valueOf("16027069");
+//
+//   HashMap<Integer, Object> result = new HashMap<>();
+//
+//    String[] arr1 = {"14027069",generateRandomPayload().toString()};
+//    String[] arr2 = {"15027069",generateRandomPayload().toString()};
+//    String[] arr3 = {"16027069",generateRandomPayload().toString()};
+//    String[] arr4 = {"17027069",generateRandomPayload().toString()};
+//    String[] arr5 = {"18027069",generateRandomPayload().toString()};
+//    String[] arr6 = {"19027069",generateRandomPayload().toString()};
+//    String[] arr7 = {"24027069",generateRandomPayload().toString()};
+//    String[] arr8 = {"25027069",generateRandomPayload().toString()};
+//    String[] arr9 = {"26027069",generateRandomPayload().toString()};
+//    String[] arr10 = {"27027069",generateRandomPayload().toString()};
+//
+//    App.updateMap(result,arr1,2);
+//    App.updateMap(result,arr2,2);
+//    App.updateMap(result,arr3,2);
+//    App.updateMap(result,arr4,2);
+//    App.updateMap(result,arr5,2);
+//    App.updateMap(result,arr6,2);
+//    App.updateMap(result,arr7,2);
+//    App.updateMap(result,arr8,2);
+//    App.updateMap(result,arr9,2);
+//    App.updateMap(result,arr10,2);
+//
+//    Assert.assertEquals(result.size(),2);
+//    Assert.assertTrue(result.containsKey(26027069));
+//    Assert.assertTrue(result.containsKey(27027069));
 
   }
 
@@ -61,6 +69,21 @@ public class FileScoreReaderTest {
     Map<String, Object> result = App.generateIdScoreMap(12345,map);
     Assert.assertEquals(result.get("id"),map.get("id"));
     Assert.assertEquals(result.get("score"),12345);
+
+  }
+
+  private void print() throws IOException {
+    int count=0;
+    String filename="/Users/wwang13/dev65/FileScoreReader/testFileReader";
+    PrintStream o = new PrintStream(new File(filename));
+    ObjectMapper objectMapper = new ObjectMapper();
+
+    while(count<10000000){
+      String json = objectMapper.writeValueAsString(generateRandomPayload());
+      System.setOut(o);
+      System.out.println((count++)+":"+json);
+
+    }
 
   }
 
